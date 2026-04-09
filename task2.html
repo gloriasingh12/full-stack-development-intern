@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Real-Time Chat | Task 2</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #e5ddd5; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        #chat-container { width: 90%; max-width: 400px; height: 500px; background: white; border-radius: 15px; display: flex; flex-direction: column; box-shadow: 0 10px 25px rgba(0,0,0,0.1); overflow: hidden; }
+        #header { background: #075e54; color: white; padding: 15px; text-align: center; font-weight: bold; }
+        #messages { flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; background: #efe7dd; }
+        .msg { padding: 8px 12px; border-radius: 8px; font-size: 0.9rem; max-width: 80%; }
+        .sent { align-self: flex-end; background: #dcf8c6; }
+        .received { align-self: flex-start; background: white; }
+        #input-area { padding: 10px; background: #f0f0f0; display: flex; gap: 10px; }
+        input { flex: 1; border: none; padding: 10px; border-radius: 20px; outline: none; }
+        button { background: #075e54; color: white; border: none; padding: 10px 15px; border-radius: 50%; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<div id="chat-container">
+    <div id="header">Aditya's Live Chat 🟢</div>
+    <div id="messages"></div>
+    <div id="input-area">
+        <input type="text" id="msg-input" placeholder="Type a message...">
+        <button onclick="send()">➤</button>
+    </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+<script>
+    // System Config (Static Real-time Simulation for Task 2)
+    const msgBox = document.getElementById('messages');
+    const input = document.getElementById('msg-input');
+
+    function send() {
+        const text = input.value.trim();
+        if (text === "") return;
+
+        // 1. Add your message
+        appendMsg(text, 'sent');
+        input.value = "";
+
+        // 2. Mock Server Response (Instantly)
+        setTimeout(() => {
+            appendMsg("Received your message: " + text, 'received');
+        }, 800);
+    }
+
+    function appendMsg(text, type) {
+        const div = document.createElement('div');
+        div.className = `msg ${type}`;
+        div.innerText = text;
+        msgBox.appendChild(div);
+        msgBox.scrollTop = msgBox.scrollHeight;
+    }
+
+    input.addEventListener("keypress", (e) => { if(e.key === "Enter") send(); });
+</script>
+
+</body>
+</html>
