@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Productivity Tracker | Task 2</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #f8fafc; margin: 0; padding: 20px; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+        .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px; }
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 25px; }
+        .stat-card { padding: 20px; border-radius: 10px; text-align: center; color: white; }
+        .productive { background: #10b981; }
+        .unproductive { background: #ef4444; }
+        .chart-container { margin-top: 30px; height: 300px; }
+        .site-list { margin-top: 20px; border-top: 1px solid #eee; padding-top: 10px; }
+        .site-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #fafafa; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h2 style="margin:0; color:#1e293b;">🚀 Productivity Analytics</h2>
+        <span id="date-now" style="color:#64748b;">Today's Report</span>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card productive">
+            <h3 style="margin:0;">Focus Time</h3>
+            <p id="focus-time" style="font-size:1.5rem; margin:10px 0;">4h 20m</p>
+            <small>Coding, Documentation</small>
+        </div>
+        <div class="stat-card unproductive">
+            <h3 style="margin:0;">Distractions</h3>
+            <p id="distract-time" style="font-size:1.5rem; margin:10px 0;">1h 15m</p>
+            <small>Social Media, Entertainment</small>
+        </div>
+    </div>
+
+    <div class="chart-container">
+        <canvas id="productivityChart"></canvas>
+    </div>
+
+    <div class="site-list">
+        <h3>Top Websites Visited</h3>
+        <div class="site-item"><span>github.com</span> <strong>2h 10m (Productive)</strong></div>
+        <div class="site-item"><span>stackoverflow.com</span> <strong>1h 45m (Productive)</strong></div>
+        <div class="site-item"><span>instagram.com</span> <strong>45m (Distraction)</strong></div>
+    </div>
+</div>
+
+<script>
+    // Logic for Chart.js
+    const ctx = document.getElementById('productivityChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            datasets: [{
+                label: 'Productive Hours',
+                data: [4, 5, 3, 6, 4, 2, 1],
+                backgroundColor: '#10b981'
+            }, {
+                label: 'Distraction Hours',
+                data: [1, 2, 1.5, 1, 0.5, 3, 4],
+                backgroundColor: '#ef4444'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: { y: { beginAtZero: true } }
+        }
+    });
+
+    document.getElementById('date-now').innerText = new Date().toDateString();
+</script>
+
+</body>
+</html>
